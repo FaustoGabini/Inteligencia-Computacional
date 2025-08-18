@@ -2,10 +2,21 @@ import numpy as np
 import pandas as pd
 
 class PerceptronSimple: 
-  def __init__ (self, tasa_aprendizaje=0.1, max_epocas = 100, tolerancia=0): 
+  def __init__ (self, 
+                tasa_aprendizaje=0.1, 
+                max_epocas = 100, 
+                tolerancia=0): 
+    """
+    Parametros: 
+    - tasa_aprendizaje (η): vel. con la que nuestra neurona aprendera.
+    - max_epocas: Epocas maximas de entrenamiento.
+    - tolerancia: criterio de parada anticipada.
+    """
     self.tasa = tasa_aprendizaje
     self.max_epocas = max_epocas
     self.tolerancia = tolerancia
+   
+    # Pesos del modelo    
     self.w = None # pesos
     self.errores = []
     
@@ -19,7 +30,7 @@ class PerceptronSimple:
 
   def entrenar(self, X, y): 
     
-    # Agregamos bias como x0 = -1
+    # Añadimos el bias como primer columna fija x0 = -1
     # Con el hstack concatenamos el bias en cada uno de los patrones
     X = np.hstack([ -np.ones((X.shape[0], 1)), X ]) 
 
@@ -28,6 +39,7 @@ class PerceptronSimple:
     self.hist_w.append(self.w) 
 
 
+    # Entrenamiento por epocas
     for epoca in range(self.max_epocas): 
       errores = 0
       for xi, objetivo in zip(X, y): 
@@ -45,6 +57,8 @@ class PerceptronSimple:
         break
       
   def predecir(self, X): 
+    
+    # Añadimos la columna de bias x0 = -1 para que coincida con la dimensión de w
      X = np.hstack([ -np.ones((X.shape[0], 1)), X ])
      output = np.dot(X, self.w)
      return self._funcion_activacion(output)
