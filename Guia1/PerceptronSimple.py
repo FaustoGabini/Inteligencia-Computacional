@@ -43,10 +43,14 @@ class PerceptronSimple:
     for epoca in range(self.max_epocas): 
       errores = 0
       for xi, objetivo in zip(X, y): 
+        
+        # Salida lineal -> np.dot(self.w, xi)
+        # Salida no lineal -> self._funcion_activacion(np.dot(self.w, xi))
         salida = self._funcion_activacion(np.dot(self.w, xi))
 
         if salida != objetivo: 
           errores += 1
+          # Actualizamos los pesos
           self.w += self.tasa * (objetivo - salida) * xi
           self.hist_w.append(self.w.copy()) 
         
