@@ -47,13 +47,17 @@ class PerceptronSimple:
         # Salida lineal -> np.dot(self.w, xi)
         # Salida no lineal -> self._funcion_activacion(np.dot(self.w, xi))
         salida = self._funcion_activacion(np.dot(self.w, xi))
-
+        
+        self.w += self.tasa * (objetivo - salida) * xi 
+        
+      # Contamos los errores de la epoca
+      # Recorremos todos los patrones y contamos los errores
+      for xi, objetivo in zip(X, y):
+        salida = self._funcion_activacion(np.dot(self.w, xi))
         if salida != objetivo: 
           errores += 1
-          # Actualizamos los pesos
-          self.w += self.tasa * (objetivo - salida) * xi
-          self.hist_w.append(self.w.copy()) 
-        
+      self.hist_w.append(self.w.copy())
+
       print(f"Época {epoca+1:3d} | Errores: {errores:3d}")
       self.errores.append(errores)
       # Criterio de finalizacion
