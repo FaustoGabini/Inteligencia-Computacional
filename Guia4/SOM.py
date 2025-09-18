@@ -35,7 +35,16 @@ class SOM:
     
     fin = time.time()
     print('El entrenamiento finalizó en la época',epoca,'en',round(fin-inicio,2),'segundos.')
-        
+    
+
+  # Devuelve la lista de posiciones de las neuronas ganadoras para cada uno de los patrones
+  def obtener_neuronas_ganadoras(self, inputs):
+    input_neurona = []
+    for input in inputs:
+      dist = np.linalg.norm(self.w - input, axis=2)
+      indice_lineal = np.argmin(dist)
+      input_neurona.append(indice_lineal)
+    return input_neurona
 
   def graficar(self, X):
     ganadoras = []
