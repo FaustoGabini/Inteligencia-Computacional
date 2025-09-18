@@ -2,7 +2,7 @@ import time
 import numpy as np
 import matplotlib.pyplot as plt
 
-class SOM:  
+class SOM_1D:  
 
   def __init__ (self, map_size, w=None):
     self.map_size = map_size
@@ -12,7 +12,7 @@ class SOM:
     n = inputs.shape[1]
     # Si los pesos no fueron dados, inicializarlos aleatoriamente
     if self.w is None:
-      self.w = np.random.uniform(-0.5, 0.5, size=(self.map_size, self.map_size, n))
+      self.w = np.random.uniform(-0.5, 0.5, size=(self.map_size, 1, n))
 
     
     inicio = time.time()
@@ -54,12 +54,12 @@ class SOM:
 
     # Graficar los centroides
     for i in range(self.map_size):
-      for j in range(self.map_size):
+      for j in range(1):
         plt.scatter(self.w[i,j,0], self.w[i,j,1], marker='o', color='black', s=100, edgecolor='white', label='Centroide' if (i==0 and j==0) else "")
         # Unir con vecinos (derecha y abajo)
         if i + 1 < self.map_size:
           plt.plot([self.w[i,j,0], self.w[i+1,j,0]], [self.w[i,j,1], self.w[i+1,j,1]], color='blue', linewidth=1)
-        if j + 1 < self.map_size:
+        if j + 1 < 1:
           plt.plot([self.w[i,j,0], self.w[i,j+1,0]], [self.w[i,j,1], self.w[i,j+1,1]], color='blue', linewidth=1)
     plt.xlabel('Característica 1')
     plt.ylabel('Característica 2')
